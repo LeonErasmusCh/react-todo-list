@@ -26,6 +26,15 @@ export default function App() {
       setEntradas([...entradas, inputValue]);
     }
   };
+
+  function handleremove(index){
+    console.log(index);
+    const newList = entradas.filter((key) => key !== index);
+    setEntradas(newList);
+  }
+    
+  
+
   return (
     <div>
       <input
@@ -47,10 +56,7 @@ export default function App() {
         {entradas.map((index, key) => (
           <li key={key}>{index} {" "}
 
-            <span><button onClick={() => {
-              entradas.splice(index);
-              console.log(index)
-            }}>x</button></span></li>
+            <span><button onClick={() => handleremove(index)}>x</button></span></li>
         ))}
       </ul>
 
