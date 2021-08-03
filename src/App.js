@@ -6,8 +6,6 @@ export default function App() {
   const [inputValue, setInputValue] = useState("");
   const [entradas, setEntradas] = useState([]);
 
-
-
   useEffect(() => {
     console.log(
       "mi arreglo tiene",
@@ -27,39 +25,48 @@ export default function App() {
     }
   };
 
-  function handleremove(index){
+  function handleremove(index) {
     console.log(index);
     const newList = entradas.filter((key) => key !== index);
     setEntradas(newList);
   }
-    
-  
+
+
 
   return (
     <div>
-      <input
-        type="text"
-        onChange={(e) => setInputValue(e.target.value)}
-        value={inputValue}
-      />
+      <div className="container mt-5">
+        <h1 className="text-center mb-4">To-Do List</h1>
+        <div className="input-group mb-3">
 
-      <button
-        onClick={() => {
-          validateInput();
-        }}
-      >
-        Click to validate empty
-      </button>
+          <input
+          className="form-control"
+          placeholder="Add something to your list..."
+            type="text"
+            onChange={(e) => setInputValue(e.target.value)}
+            value={inputValue}
+          />
+
+          <button
+          className="tn btn-info input-group-text" id="basic-addon2"
+            onClick={() => {
+              validateInput();
+            }}
+          >
+            Add item
+          </button>
+        </div>
+
+        <ul className="list-group">
+          {entradas.map((index, key) => (
+            <li className="list-group-item" key={key}>{index} {" "}
+
+              <span className="float-end"><button className="btn btn-warning btn-sm"   onClick={() => handleremove(index)}>Delete</button></span></li>
+          ))}
+        </ul>
 
 
-      <ul>
-        {entradas.map((index, key) => (
-          <li key={key}>{index} {" "}
-
-            <span><button onClick={() => handleremove(index)}>x</button></span></li>
-        ))}
-      </ul>
-
+      </div>
     </div>
   );
 }
