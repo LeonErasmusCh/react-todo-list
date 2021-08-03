@@ -1,76 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
+//import "./styles.css";
+import "../src/App.css"
+import React, { useState, useEffect } from "react";
 
-import React from "react";
+export default function App() {
+  const [inputValue, setInputValue] = useState("");
+  const [entradas, setEntradas] = useState([]);
 
-//include images into your bundle
-import { useState, useEffect } from "react";
 
-//create your first component
-export default function Home() {
-	const [inputValue, setInputValue] = useState("");
-	const [entradas, setEntradas] = useState([]);
 
-	const listItems = entradas.map(entrada => (
-		<li className="list-group-item" key={entrada}>
-			{entrada}
+  useEffect(() => {
+    console.log(
+      "mi arreglo tiene",
+      entradas.length,
+      "elementos hasta el momento"
+    );
+    console.log(entradas);
+  }, [entradas]);
 
-			<span className="float-end">
-				<button type="button" className="btn btn-warning btn-sm text-white">
-					Remove
-				</button>
-			</span>
-		</li>
-	));
+  const validateInput = () => {
+    // === COMPARACIÓN ESTRICTA
+    if (inputValue === "") {
+      console.log("The input cannot be empty");
+    } else {
+      console.log("All perfect!");
+      setEntradas([...entradas, inputValue]);
+    }
+  };
+  return (
+    <div>
+      <input
+        type="text"
+        onChange={(e) => setInputValue(e.target.value)}
+        value={inputValue}
+      />
 
-	useEffect(() => {
-		console.log(
-			"mi arreglo tiene",
-			entradas.length,
-			"elementos hasta el momento"
-		);
-		console.log(entradas);
-	}, [entradas]);
+      <button
+        onClick={() => {
+          validateInput();
+        }}
+      >
+        Click to validate empty
+      </button>
 
-	const validateInput = () => {
-		// === COMPARACIÓN ESTRICTA
-		if (inputValue === "") {
-			console.log("The input cannot be empty");
-		} else {
-			console.log("All perfect!");
-			setEntradas([...entradas, inputValue]);
-		}
-	};
-	return (
-		<div>
-			<div className="container mt-5">
-				<div className="col-8 mx-auto">
-					<h1 className="text-center text-info">Todo List</h1>
 
-					<div className="input-group mb-3">
-						<input
-							className="form-control"
-							type="text"
-							onChange={e => setInputValue(e.target.value)}
-							value={inputValue}
-						/>
+      <ul>
+        {entradas.map((index, key) => (
+          <li key={key}>{index} {" "}
 
-						<div className="input-group-append">
-							<button
-								className="btn btn-info text-white"
-                id="button-addon2"
-								onClick={() => {
-									validateInput();
-									setInputValue("");
-								}}>
-								Add something
-							</button>
-						</div>
-					</div>
-					<ul className="list-group">{listItems}</ul>
-				</div>
-			</div>
-		</div>
-	);
+            <span><button onClick={() => {
+              entradas.splice(index);
+              console.log(index)
+            }}>x</button></span></li>
+        ))}
+      </ul>
+
+    </div>
+  );
 }
+
+
+
+
 
